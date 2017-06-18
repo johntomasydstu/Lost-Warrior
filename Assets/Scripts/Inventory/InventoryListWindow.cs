@@ -8,6 +8,8 @@ public class InventoryListWindow : MonoBehaviour {
 	public List<BaseItem> PlayerInventory = new List<BaseItem>(); // The Player's Inventory
 
 	public PlayerHealthManager PlayerHealthManagerScript;
+	public PlayerStats PlayerStatsScript;
+
 
 	public GameObject itemSlotPrefab;
 	public GameObject content;
@@ -29,6 +31,12 @@ public class InventoryListWindow : MonoBehaviour {
 	private Image itemSlotIcon;
 	private bool selected;
 	private bool UseEquipPressed;
+
+	public Transform EquippedWeapon;
+	public Text EquippedWeaponText;
+
+	public Transform EquippedArmour;
+	public Text EquippedArmourText;
 
 
 
@@ -54,7 +62,7 @@ public class InventoryListWindow : MonoBehaviour {
 		foreach (Transform child in content.transform) 
 		{
 			Toggle childToggle = child.GetComponent<Toggle> ();
-			Text ItemSlotTextAmount = child.transform.FindChild("text_ItemAmount").GetComponent<Text>();
+			Text ItemSlotTextAmount = child.transform.Find("text_ItemAmount").GetComponent<Text>();
 			BaseItem childBaseItemScript = child.GetComponent<BaseItem> ();
 			if (childToggle.isOn) 
 			{
@@ -77,17 +85,44 @@ public class InventoryListWindow : MonoBehaviour {
 		}
 	}
 
+
+
 	public void UseEquip()
 	{
 		BaseItem selectedItemSlotBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
-		Text ItemSlotTextAmount = selectedItemSlot.transform.FindChild("text_ItemAmount").GetComponent<Text>();
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
 		if (selectedItemSlotBaseItemScript.ItemType == BaseItem.ItemTypes.CONSUMABLE) 
 		{
 			selectedItemSlotBaseItemScript.ItemQuantity -= 1;
-			print ("health to restore: " + selectedItemSlotBaseItemScript.HealthToRestore);
 			PlayerHealthManagerScript.playerCurrentHealth += selectedItemSlotBaseItemScript.HealthToRestore;
-			print ("yummy!");
 			ItemSlotTextAmount.text = ("(x" + selectedItemSlotBaseItemScript.ItemQuantity + ")");
+		}
+
+		if (selectedItemSlotBaseItemScript.ItemType == BaseItem.ItemTypes.WEAPON) 
+		{
+			if (selectedItemSlot == EquippedWeapon) {
+				UnequipWeapon ();
+			} 
+			else 
+			{
+				EquipWeapon(selectedItemSlotBaseItemScript.ArmourWeaponType, selectedItemSlotBaseItemScript.WeaponDamage);
+				EquippedWeapon = selectedItemSlot;
+			}
+
+
+		}
+
+		if (selectedItemSlotBaseItemScript.ItemType == BaseItem.ItemTypes.ARMOUR) 
+		{
+			if (selectedItemSlot == EquippedArmour) {
+				UnequipArmour ();
+			} 
+			else 
+			{
+				EquipArmour (selectedItemSlotBaseItemScript.ArmourWeaponType);
+				EquippedArmour = selectedItemSlot;
+			}
+
 		}
 
 		if (selectedItemSlotBaseItemScript.ItemQuantity == 0) 
@@ -95,13 +130,55 @@ public class InventoryListWindow : MonoBehaviour {
 			PlayerInventory.Remove (selectedItemSlotBaseItemScript);
 			Destroy (selectedItemSlot.gameObject);
 		}
-
-		foreach (Transform child in content.transform) 
-		{			
-			
-		}
 	}
 
+
+	public void EquipWeapon(string type, int damage)
+	{
+		if (EquippedWeapon != null) 
+		{
+			EquippedWeaponText = EquippedWeapon.transform.Find("text_ItemAmount").GetComponent<Text>();
+			EquippedWeaponText.text = "";
+		}
+
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+		BaseItem selectedItemSlotBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
+		PlayerStatsScript.EquipWeapon (selectedItemSlotBaseItemScript.ArmourWeaponType, selectedItemSlotBaseItemScript.WeaponDamage);
+		ItemSlotTextAmount.text = "(Equipped)";
+
+	}
+
+	public void EquipArmour(string type)
+	{
+		if (EquippedArmour != null) 
+		{
+			EquippedArmourText = EquippedArmour.transform.Find("text_ItemAmount").GetComponent<Text>();
+			EquippedArmourText.text = "";
+		}
+
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+		BaseItem selectedItemSlotBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
+		PlayerStatsScript.EquipArmour (selectedItemSlotBaseItemScript.ArmourWeaponType);
+		ItemSlotTextAmount.text = "(Equipped)";
+	}
+
+	public void UnequipWeapon()
+	{
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+		BaseItem selectedItemSlotBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
+		PlayerStatsScript.UnequipWeapon ();
+		ItemSlotTextAmount.text = "";
+		EquippedWeapon = null;
+	}
+
+	public void UnequipArmour()
+	{
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+		BaseItem selectedItemSlotBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
+		PlayerStatsScript.UnequipArmour ();
+		ItemSlotTextAmount.text = "";
+		EquippedArmour = null;
+	}
 
 
 	public void AddItemToInventory(int id, int Quantity = 1)
@@ -120,7 +197,7 @@ public class InventoryListWindow : MonoBehaviour {
 					found = true;
 					print ("Found: " + found);
 					childBaseItemScript.ItemQuantity = childBaseItemScript.ItemQuantity + Quantity;
-					Text childTextAmount = child.transform.FindChild ("text_ItemAmount").GetComponent<Text> ();
+					Text childTextAmount = child.transform.Find ("text_ItemAmount").GetComponent<Text> ();
 					childTextAmount.text = ("(x" + childBaseItemScript.ItemQuantity + ")");
 				} 
 
@@ -141,6 +218,9 @@ public class InventoryListWindow : MonoBehaviour {
 				itemSlotBaseItemScript.ItemType = ItemDatabase.ListOfItems[id].ItemType;
 				itemSlotBaseItemScript.Stackable = ItemDatabase.ListOfItems[id].Stackable;
 				itemSlotBaseItemScript.HealthToRestore = ItemDatabase.ListOfItems[id].HealthToRestore;
+				itemSlotBaseItemScript.ArmourWeaponType = ItemDatabase.ListOfItems[id].ArmourWeaponType;
+				itemSlotBaseItemScript.WeaponDamage = ItemDatabase.ListOfItems[id].WeaponDamage;
+
 
 
 				itemSlotBaseItemScript.ItemQuantity = Quantity;
@@ -149,10 +229,16 @@ public class InventoryListWindow : MonoBehaviour {
 
 				itemSlotTextName = itemSlot.GetComponentInChildren<Text> ();
 				itemSlotTextName.text = itemSlotBaseItemScript.ItemName;
-				itemSlotTextAmount = itemSlot.transform.FindChild("text_ItemAmount").GetComponent<Text>();
-				itemSlotTextAmount.text = ("(x" + itemSlotBaseItemScript.ItemQuantity + ")");
+				itemSlotTextAmount = itemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+				if (itemSlotBaseItemScript.Stackable == true) {
+					itemSlotTextAmount.text = ("(x" + itemSlotBaseItemScript.ItemQuantity + ")");
+				} 
+				else 
+				{
+					itemSlotTextAmount.text = "";
+				}
 
-				itemSlotIcon = itemSlot.transform.FindChild("ItemIcon").GetComponent<Image> ();
+				itemSlotIcon = itemSlot.transform.Find("ItemIcon").GetComponent<Image> ();
 				itemSlotIcon.sprite = ItemDatabase.ListOfItems[id].ItemSprite;
 			}
 		}
@@ -172,6 +258,10 @@ public class InventoryListWindow : MonoBehaviour {
 			itemSlotBaseItemScript.ItemType = ItemDatabase.ListOfItems[id].ItemType;
 			itemSlotBaseItemScript.Stackable = ItemDatabase.ListOfItems[id].Stackable;
 			itemSlotBaseItemScript.HealthToRestore = ItemDatabase.ListOfItems[id].HealthToRestore;
+			itemSlotBaseItemScript.ArmourWeaponType = ItemDatabase.ListOfItems[id].ArmourWeaponType;
+			itemSlotBaseItemScript.WeaponDamage = ItemDatabase.ListOfItems[id].WeaponDamage;
+
+
 
 
 			itemSlotBaseItemScript.ItemQuantity = Quantity;
@@ -180,131 +270,11 @@ public class InventoryListWindow : MonoBehaviour {
 
 			itemSlotTextName = itemSlot.GetComponentInChildren<Text> ();
 			itemSlotTextName.text = itemSlotBaseItemScript.ItemName;
-			itemSlotTextAmount = itemSlot.transform.FindChild("text_ItemAmount").GetComponent<Text>();
+			itemSlotTextAmount = itemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
 			itemSlotTextAmount.text = ("(x" + itemSlotBaseItemScript.ItemQuantity + ")");
 
-			itemSlotIcon = itemSlot.transform.FindChild("ItemIcon").GetComponent<Image> ();
+			itemSlotIcon = itemSlot.transform.Find("ItemIcon").GetComponent<Image> ();
 			itemSlotIcon.sprite = ItemDatabase.ListOfItems[id].ItemSprite;
 		}
-}
-
-
-
-
-
-
-
-
-
-
-	//Add Item function
-	//Adds the specified item to the Player's Inventory.
-	public void AddItem(int id, int Quantity = 1) //Parameters include the item id, and the quantity to add (set to 1 by default)
-	{
-		GameObject item = Instantiate(itemSlotPrefab) as GameObject; 
-		BaseItem i = item.GetComponent<BaseItem> ();
-
-		i.ItemName = ItemDatabase.ListOfItems[id].ItemName;
-		i.ItemDescription = ItemDatabase.ListOfItems[id].ItemDescription;
-		i.ItemSprite = ItemDatabase.ListOfItems[id].ItemSprite;
-		i.ItemType = ItemDatabase.ListOfItems[id].ItemType;
-		i.Stackable = ItemDatabase.ListOfItems[id].Stackable;
-
-		i.ItemQuantity = Quantity;
-		PlayerInventory.Add (i);
-
-		foreach (Transform child in content.transform) {
-
-		}
-			
-
 	}
-
-	public void UpdateInventorySlotsInWindow()
-	{
-
-
-		foreach (Transform child in content.transform) {
-			Destroy (child.gameObject);
-		}
-
-		for(int i = 0; i < PlayerInventory.Count ; i++) //gameobject find and look for the player's inventory and get the count of the inventory.
-		{
-			//Debug.Log ("ItemNameasdasd: " + PlayerInventory [i].ItemName);
-			itemSlot = (GameObject)Instantiate(itemSlotPrefab);
-			itemSlot.name = i.ToString();
-			itemSlot.GetComponent<BaseItem> ().ItemName = itemSlot.name;
-
-			itemSlotTextName = itemSlot.GetComponentInChildren<Text> ();
-			itemSlotTextName.text = PlayerInventory [i].ItemName;
-
-			itemSlotTextAmount = itemSlot.transform.FindChild("text_ItemAmount").GetComponent<Text>();
-			itemSlotTextAmount.text = ("(x" + PlayerInventory[i].ItemQuantity + ")");
-
-			itemSlotIcon = itemSlot.transform.FindChild("ItemIcon").GetComponent<Image> ();
-			itemSlotIcon.sprite = PlayerInventory [i].ItemSprite;
-
-			itemSlot.GetComponent<Toggle> ().group = itemSlotToggleGroup;
-			itemSlot.transform.SetParent(content.transform);
-			itemSlot.GetComponent<RectTransform> ().localPosition = new Vector3 (xPos, yPos, 0);
-			yPos -= (int)itemSlot.GetComponent<RectTransform> ().rect.height;
-		}
-	}
-
-
-
-
-
-	void tempfunction () 
-	{
-		foreach (Transform child in content.transform) 
-		{
-			Toggle childToggle = child.GetComponent<Toggle> ();
-			Text ItemSlotTextAmount = child.transform.FindChild("text_ItemAmount").GetComponent<Text>();
-			BaseItem childBaseItemScript = child.GetComponent<BaseItem> ();
-			if (childToggle.isOn) 
-			{
-				ItemDescriptionBox.text = childBaseItemScript.ItemDescription;
-				ItemIconBox.sprite = childBaseItemScript.ItemSprite;
-				if (childBaseItemScript.ItemType == BaseItem.ItemTypes.CONSUMABLE || childBaseItemScript.ItemType == BaseItem.ItemTypes.WEAPON ||
-					childBaseItemScript.ItemType == BaseItem.ItemTypes.ARMOUR) 
-				{
-					UseEquipButton.gameObject.SetActive (true);
-				}
-				if (UseEquipPressed) 
-				{ 
-					if (childBaseItemScript.ItemType == BaseItem.ItemTypes.CONSUMABLE) 
-					{
-						childBaseItemScript.ItemQuantity -= 1;
-						print ("health to restore: " + childBaseItemScript.HealthToRestore);
-						PlayerHealthManagerScript.playerCurrentHealth += childBaseItemScript.HealthToRestore;
-						print ("yummy!");
-						ItemSlotTextAmount.text = ("(x" + childBaseItemScript.ItemQuantity + ")");
-						UseEquipPressed = false;
-						return;
-					}
-
-				}
-				if (childBaseItemScript.ItemQuantity == 0) 
-				{
-					PlayerInventory.Remove (childBaseItemScript);
-					Destroy (child.gameObject);
-					return;
-				}
-				return;
-			}
-			else if (!childToggle.isOn)
-			{
-				UseEquipButton.gameObject.SetActive(false);
-				ItemDescriptionBox.text = "";
-				ItemIconBox.sprite = emptyIcon;
-			}
-
-		}
-	}
-
-
-
-
-
 }

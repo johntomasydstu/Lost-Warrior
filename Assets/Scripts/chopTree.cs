@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class chopTree : MonoBehaviour {
 
@@ -8,26 +9,35 @@ public class chopTree : MonoBehaviour {
 	public Sprite treestump;
 	public Sprite temp;
 
-	public float regenDelay = 3;
+	public Transform canvas;
+
+
+	public float regenDelay = 3.0f;
 	private bool chopped;
 
+	public InventoryListWindow InventoryListWindowScript;
 
 
 	void Start()
 	{
+		//InventoryListWindowScript = GameObject.Find("CanvasInventory/InventoryListWindow").GetComponent<InventoryListWindow>();
 		chopped = false;
 	}
 
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (Input.GetKeyDown ("j")) 
+		if (other.gameObject.tag == "Player" && Input.GetKeyDown ("k")) 
 		{
 			if (chopped == false) 
 			{
 				treetop.enabled = false; //Makes the top of the tree invisible
 				treelower.sprite = treestump; //Makes the lower part of the tree turn into a tree stump	
 				chopped = true;
+				print ("Chopped!!");
+
+				InventoryListWindowScript.AddItemToInventory(0, 1); //Adds an item with the id of 0 (wood) to the player's inventory.
+
 				StartCoroutine ("waitForSeconds",regenDelay);
 			}
 
@@ -38,7 +48,7 @@ public class chopTree : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(regenDelay);
 		treetop.enabled = true; //Makes the top of the tree invisible
-		treelower.sprite = temp; //Makes the lower part of the tree turn into a tree stump	
+		treelower.sprite = temp; //Makes the lower part of the tree turn into top part of tree
 		chopped = false;
 
 

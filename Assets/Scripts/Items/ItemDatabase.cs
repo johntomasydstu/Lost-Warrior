@@ -10,8 +10,7 @@ public class ItemDatabase : MonoBehaviour{
 
 	// Use this for initialization
 	void Start () {
-
-
+		
 		//Wood
 		BaseItem i0 = gameObject.AddComponent<BaseItem>();
 		i0.ItemName = "Wood";
@@ -43,11 +42,56 @@ public class ItemDatabase : MonoBehaviour{
 		i2.HealthToRestore = 10;
 		ListOfItems.Add (i2);
 
+		//Bronze Sword
+		BaseItem i3 = gameObject.AddComponent<BaseItem>();
+		i3.ItemName = "Bronze Sword";
+		i3.ItemDescription = "A sword made out of bronze. +5 Attack";
+		i3.ItemId = 3;
+		i3.ItemType = BaseItem.ItemTypes.WEAPON;
+		i3.ItemSprite = sprites[3];
+		i3.Stackable = false;
+		i3.WeaponDamage = 5;
+		i3.ArmourWeaponType = "Bronze";
+		ListOfItems.Add (i3);
+
+		//Bronze Armour
+		BaseItem i4 = gameObject.AddComponent<BaseItem>();
+		i4.ItemName = "Bronze Armour";
+		i4.ItemDescription = "A suit of armour made out of bronze. +5 Defence";
+		i4.ItemId = 4;
+		i4.ItemType = BaseItem.ItemTypes.ARMOUR;
+		i4.ItemSprite = sprites[4];
+		i4.Stackable = false;
+		i4.ArmourWeaponType = "Bronze";
+		ListOfItems.Add (i4);
+
+		//Iron Sword
+		BaseItem i5 = gameObject.AddComponent<BaseItem>();
+		i5.ItemName = "Iron Sword";
+		i5.ItemDescription = "A sword made out of Iron. +10 Attack";
+		i5.ItemId = 5;
+		i5.ItemType = BaseItem.ItemTypes.WEAPON;
+		i5.ItemSprite = sprites[5];
+		i5.Stackable = false;
+		i5.WeaponDamage = 10;
+		i5.ArmourWeaponType = "Iron";
+		ListOfItems.Add (i5);
+
+		//Iron Armour
+		BaseItem i6 = gameObject.AddComponent<BaseItem>();
+		i6.ItemName = "Iron Armour";
+		i6.ItemDescription = "A suit of armour made out of Iron. +10 Defence";
+		i6.ItemId = 6;
+		i6.ItemType = BaseItem.ItemTypes.ARMOUR;
+		i6.ItemSprite = sprites[6];
+		i6.Stackable = false;
+		i6.ArmourWeaponType = "Iron";
+		ListOfItems.Add (i6);
+
 //		foreach (var item in ListOfItems)
 //		{
-//			Debug.Log(item.ItemName);
+//			Debug.Log("Item " + item.ItemId + ": " + item.ItemName);
 //		}
-
-		//Debug.Log ("ListOfItems: " + ListOfItems.ToString());
+			
 	}
 }

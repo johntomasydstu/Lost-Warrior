@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		print ("attacking = " + attacking);
+		//print ("attacking = " + attacking);
 		rbody = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 
@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
-//		print ("isattacking = " + anim.GetBool("IsAttacking"));
+		//Checks if the player's "IsAttacking" animation variable is on
+		//print("isAttacking = " + anim.GetBool("IsAttacking"));
 
 		if (!freezeMovement) 
 		{
@@ -72,6 +72,8 @@ public class PlayerController : MonoBehaviour {
 				}
 				//rbody.velocity = Vector2.zero;
 				anim.SetBool ("IsAttacking", true);
+				//print("isAttacking = " + anim.GetBool("IsAttacking"));
+
 			}
 
 
@@ -91,6 +93,8 @@ public class PlayerController : MonoBehaviour {
 				freezeMovement = false;
 			}
 			anim.SetBool ("IsAttacking", false);
+			//print("isAttacking = " + anim.GetBool("IsAttacking"));
+
 		}
 	
 	}

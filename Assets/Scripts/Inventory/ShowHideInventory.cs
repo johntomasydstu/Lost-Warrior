@@ -11,9 +11,10 @@ public class ShowHideInventory : MonoBehaviour {
 
 	public bool invShowing = false;
 
+
 	void Awake ()
 	{
-		invShowing = false;
+		invShowing = false; 
 		//invShowing = false;
 		CanvasGroup = canvas.GetComponent<CanvasGroup> ();
 		print (invShowing);
@@ -31,14 +32,20 @@ public class ShowHideInventory : MonoBehaviour {
 	{
 		if (Input.GetKeyDown ("i")) 
 		{
+			print("'i' key pressed!");
+			//Checks if the inventory is not showing and if the Stat's Screen is also not showing
+			//and if so, shows the inventory, but if the inventory is already showing or if the
+			//Stat's Screen is already showing, it hides the inventory.
 			if (!invShowing && !StatsScreenShowHideScript.StatScreenShowing) 
 			{
+				//print("Inventory Showing");
 				CanvasGroup.alpha = 0.75f;
 				CanvasGroup.blocksRaycasts = true;
 				invShowing = true;
 			} 
 			else 
 			{
+				//print("Inventory Not Showing");
 				CanvasGroup.alpha = 0f;
 				CanvasGroup.blocksRaycasts = false;
 				invShowing = false;

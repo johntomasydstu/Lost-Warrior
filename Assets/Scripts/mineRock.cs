@@ -10,6 +10,9 @@ public class mineRock : MonoBehaviour {
 	public float regenDelay = 3;
 	private bool mined;
 
+	public InventoryListWindow InventoryListWindowScript;
+
+
 
 
 	void Start()
@@ -20,12 +23,16 @@ public class mineRock : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (Input.GetKeyDown ("j")) 
+		if (other.gameObject.tag == "Player" && Input.GetKeyDown ("k")) 
 		{
 			if (mined == false) 
 			{
 				rock.sprite = rock_empty; //Makes the lower part of the tree turn into a tree stump	
 				mined = true;
+				print ("Mined!!");
+
+				InventoryListWindowScript.AddItemToInventory(1, 1); //Adds an item with the id of 1 (iron ore) to the player's inventory.
+
 				StartCoroutine ("waitForSeconds",regenDelay);
 			}
 

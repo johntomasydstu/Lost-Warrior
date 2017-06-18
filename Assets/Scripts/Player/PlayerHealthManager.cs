@@ -17,6 +17,7 @@ public class PlayerHealthManager : MonoBehaviour {
 		playerMaxHealth = PlayerStatsScript.HealthStat;
 		playerCurrentHealth = playerMaxHealth;
 
+
 		spriteRender = GetComponent<SpriteRenderer>();
 	
 

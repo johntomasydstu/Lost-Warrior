@@ -10,6 +10,10 @@ public class StatsScreen : MonoBehaviour {
 	public Text text_PlayerLevel;
 	public Text text_PlayerHealthStat;
 	public Text text_PlayerAttackStat;
+	public Text text_Weapon;
+	public Text text_Armour;
+	public InventoryListWindow InventoryListWindowScript;
+
 
 
 	// Use this for initialization
@@ -38,6 +42,25 @@ public class StatsScreen : MonoBehaviour {
 			text_PlayerAttackStat.text = "Attack  = "  + PlayerStatsScript.baseAttackStat.ToString();
 		}
 
+		if (InventoryListWindowScript.EquippedWeapon != null) {
+			text_Weapon.text = "Weapon  = " + InventoryListWindowScript.EquippedWeapon.GetComponent<BaseItem> ().ItemName;
+		} 
+		else 
+		{
+			text_Weapon.text = "Weapon  = none";
+
+		}
+
+		if (InventoryListWindowScript.EquippedArmour != null) {
+			text_Armour.text = "Armour  = " + InventoryListWindowScript.EquippedArmour.GetComponent<BaseItem> ().ItemName;
+		} 
+		else 
+		{
+			text_Armour.text = "Armour  = none";
+
+		}
+
+
 	}
 	
 	// Update is called once per frame
@@ -65,6 +88,24 @@ public class StatsScreen : MonoBehaviour {
 		else 
 		{
 			text_PlayerAttackStat.text = "Attack  = "  + PlayerStatsScript.baseAttackStat.ToString();
+		}
+
+		if (InventoryListWindowScript.EquippedWeapon != null) {
+			text_Weapon.text = "Weapon  = " + InventoryListWindowScript.EquippedWeapon.GetComponent<BaseItem> ().ItemName;
+		} 
+		else 
+		{
+			text_Weapon.text = "Weapon  = none";
+
+		}
+
+		if (InventoryListWindowScript.EquippedArmour != null) {
+			text_Armour.text = "Armour  = " + InventoryListWindowScript.EquippedArmour.GetComponent<BaseItem> ().ItemName;
+		} 
+		else 
+		{
+			text_Armour.text = "Armour  = none";
+
 		}
 	}
 }

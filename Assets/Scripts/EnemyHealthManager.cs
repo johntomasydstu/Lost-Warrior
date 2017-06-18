@@ -29,6 +29,11 @@ public class EnemyHealthManager : MonoBehaviour {
 		{
 			Destroy (gameObject);
 			InventoryListWindowScript.AddItemToInventory(2, 1); //Adds an item with the id of 2 (Small Health Potion) to the player's inventory.
+			InventoryListWindowScript.AddItemToInventory(3, 1); //Adds an item with the id of 3 (Bronze Sword) to the player's inventory.
+			InventoryListWindowScript.AddItemToInventory(4, 1); //Adds an item with the id of 4 (Bronze Armour) to the player's inventory.
+			InventoryListWindowScript.AddItemToInventory(5, 1); //Adds an item with the id of 5 (Iron Sword) to the player's inventory.
+			InventoryListWindowScript.AddItemToInventory(6, 1); //Adds an item with the id of 6 (Iron Armour) to the player's inventory.
+
 
 			thePlayerLevel.AddExperience (ExpToGive);
 		}
