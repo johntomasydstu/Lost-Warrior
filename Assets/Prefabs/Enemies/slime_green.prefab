@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 95915035767016504}
   - component: {fileID: 58870665584328892}
   - component: {fileID: 50590867218430936}
+  - component: {fileID: 225769029167460346}
   m_Layer: 0
   m_Name: slime_green
   m_TagString: Enemy
@@ -216,6 +217,8 @@ MonoBehaviour:
   CurrentHealth: 15
   ExpToGive: 10
   InventoryListWindowScript: {fileID: 0}
+  delay: 1
+  slimeLevel: 0
 --- !u!114 &114156171624298406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,9 +231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  EnemyHealthManagerScript: {fileID: 0}
   timeBetweenMove: 2
   timeToMove: 1
-  waitToReload: 0
 --- !u!114 &114258803530685256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -626,6 +629,17 @@ CanvasGroup:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1281077030900488}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!225 &225769029167460346
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1237226222196854}
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1

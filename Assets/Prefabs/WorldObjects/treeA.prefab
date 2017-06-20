@@ -176,7 +176,7 @@ MonoBehaviour:
   treestump: {fileID: 21300000, guid: 0b92bf237705b4aa2b123b16c888ef00, type: 3}
   temp: {fileID: 21300000, guid: 51ff860c5e1574465b7be67033824c19, type: 3}
   canvas: {fileID: 0}
-  regenDelay: 3
+  regenDelay: 60
   InventoryListWindowScript: {fileID: 0}
 --- !u!212 &212000010886880414
 SpriteRenderer:

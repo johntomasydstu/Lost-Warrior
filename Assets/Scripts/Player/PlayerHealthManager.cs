@@ -9,6 +9,7 @@ public class PlayerHealthManager : MonoBehaviour {
 	public int playerMaxHealth;
 	public int playerCurrentHealth;
 	public SpriteRenderer spriteRender;
+	public Canvas GameOverCanvas;
 
 
 	// Use this for initialization
@@ -32,6 +33,7 @@ public class PlayerHealthManager : MonoBehaviour {
 		if (playerCurrentHealth <= 0) 
 		{
 			gameObject.SetActive (false);
+			GameOverCanvas.gameObject.SetActive(true);
 
 		}
 

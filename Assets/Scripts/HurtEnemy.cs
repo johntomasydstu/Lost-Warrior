@@ -14,15 +14,12 @@ public class HurtEnemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		damageToGive = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().AttackStat;
+		damageToGive = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerStats> ().AttackStat;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		damageToGive = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().AttackStat;
-
-		
+		damageToGive = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerStats> ().AttackStat;
 	}
 
 	void OnTriggerStay2D(Collider2D other)

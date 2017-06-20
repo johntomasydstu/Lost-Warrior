@@ -7,6 +7,7 @@ public class slimeController : MonoBehaviour {
 
 	private Rigidbody2D myRigidbody;
 
+
 	private bool moving;
 
 	public float timeBetweenMove;
@@ -16,9 +17,8 @@ public class slimeController : MonoBehaviour {
 
 	private Vector3 moveDirection;
 
-	public float waitToReload;
-	private bool reloading; //Use this for reloading
 	private GameObject player;
+
 
 	// Use this for initialization
 	void Start () {
@@ -67,14 +67,7 @@ public class slimeController : MonoBehaviour {
 			}
 		}
 
-		if (reloading) 
-		{
-			waitToReload -= Time.deltaTime;
-			if (waitToReload < 0f) 
-			{
-				Application.LoadLevel (Application.loadedLevel);
-				player.SetActive (true);
-			}
-		}
 	}
+
+
 }

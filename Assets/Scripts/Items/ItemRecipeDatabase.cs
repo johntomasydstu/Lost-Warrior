@@ -106,8 +106,6 @@ public class ItemRecipeDatabase : MonoBehaviour {
 
 	public void CraftItem(int id)
 	{
-		List<BaseItem> output = new List<BaseItem>();
-
 		foreach (List<BaseItem> recipe in CraftingRecipes.Keys) 
 		{
 			foreach (BaseItem Ingredient in recipe) 
@@ -174,22 +172,22 @@ public class ItemRecipeDatabase : MonoBehaviour {
 				InventoryListWindowScript.AddItemToInventory (craftedItem.ItemId, 1);
 
 				//remove item
-				foreach (Transform child in content.transform) 
-				{
-					BaseItem childBaseItemScript = child.GetComponent<BaseItem> ();
-					foreach (List<BaseItem> recipe in CraftingRecipes.Keys) 
-					{
-						foreach (BaseItem Ingredient in recipe) 
-						{
-							if (childBaseItemScript.ItemName == Ingredient.ItemName)
-							{
-								InventoryListWindowScript.RemoveItemFromInventory (child.gameObject, Ingredient.ItemQuantity);
-							}
-						}
-
-					}
-
-				}
+//				foreach (Transform child in content.transform) 
+//				{
+//					BaseItem childBaseItemScript = child.GetComponent<BaseItem> ();
+//					foreach (List<BaseItem> recipe in CraftingRecipes.Keys) 
+//					{
+//						foreach (BaseItem Ingredient in recipe) 
+//						{
+//							if (childBaseItemScript.ItemName == Ingredient.ItemName)
+//							{
+//								InventoryListWindowScript.RemoveItemFromInventory (child.gameObject, Ingredient.ItemQuantity);
+//							}
+//						}
+//
+//					}
+//
+//				}
 
 			}
 		}

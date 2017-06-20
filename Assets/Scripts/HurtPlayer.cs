@@ -9,7 +9,8 @@ public class HurtPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		EnemyHealthManager EnemyHealthManagerScript = gameObject.GetComponent<EnemyHealthManager> ();
+		damageToGive = damageToGive * EnemyHealthManagerScript.slimeLevel;
 	}
 	
 	// Update is called once per frame
