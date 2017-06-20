@@ -5,6 +5,8 @@ using UnityEngine;
 public class StatsScreenShowHide : MonoBehaviour {
 
 	public ShowHideInventory ShowHideInventoryScript;
+	public ShowHideItemCraftScreen ShowHideItemCraftScreenScript;
+
 
 	public Transform canvas;
 	public CanvasGroup CanvasGroup;
@@ -28,7 +30,7 @@ public class StatsScreenShowHide : MonoBehaviour {
 	{
 		if (Input.GetKeyDown ("u")) 
 		{
-			if (!StatScreenShowing && !ShowHideInventoryScript.invShowing) 
+			if (!StatScreenShowing && !ShowHideInventoryScript.invShowing && !ShowHideItemCraftScreenScript.itemCraftScreenShowing) 
 			{
 				CanvasGroup.alpha = 0.75f;
 				CanvasGroup.blocksRaycasts = true;

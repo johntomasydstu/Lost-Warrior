@@ -9,6 +9,7 @@ public class InventoryListWindow : MonoBehaviour {
 
 	public PlayerHealthManager PlayerHealthManagerScript;
 	public PlayerStats PlayerStatsScript;
+	public ItemRecipeDatabase ItemRecipeDatabaseScript;
 
 
 	public GameObject itemSlotPrefab;
@@ -86,6 +87,22 @@ public class InventoryListWindow : MonoBehaviour {
 	}
 
 
+	public void RemoveItemFromInventory(GameObject item, int amount)
+	{
+		BaseItem itemBaseItemScript = selectedItemSlot.GetComponent<BaseItem> ();
+		Text ItemSlotTextAmount = selectedItemSlot.transform.Find("text_ItemAmount").GetComponent<Text>();
+
+		itemBaseItemScript.ItemQuantity -= amount;
+		ItemSlotTextAmount.text = ("(x" + itemBaseItemScript.ItemQuantity + ")");
+
+		if (itemBaseItemScript.ItemQuantity == 0) 
+		{
+			PlayerInventory.Remove (itemBaseItemScript);
+			Destroy (selectedItemSlot.gameObject);
+		}
+	}
+
+
 
 	public void UseEquip()
 	{
@@ -131,7 +148,6 @@ public class InventoryListWindow : MonoBehaviour {
 			Destroy (selectedItemSlot.gameObject);
 		}
 	}
-
 
 	public void EquipWeapon(string type, int damage)
 	{
@@ -187,10 +203,10 @@ public class InventoryListWindow : MonoBehaviour {
 		if (content.transform.childCount > 0) 
 		{
 			bool found = false;
-			print ("Found: " + found);
+			//print ("Found: " + found);
 			foreach (Transform child in content.transform) 
 			{
-				print ("Child: " + child);
+				//print ("Child: " + child);
 				BaseItem childBaseItemScript = child.GetComponent<BaseItem> ();
 				if (childBaseItemScript.ItemName == ItemDatabase.ListOfItems [id].ItemName && ItemDatabase.ListOfItems [id].Stackable == true) 
 				{
@@ -199,6 +215,7 @@ public class InventoryListWindow : MonoBehaviour {
 					childBaseItemScript.ItemQuantity = childBaseItemScript.ItemQuantity + Quantity;
 					Text childTextAmount = child.transform.Find ("text_ItemAmount").GetComponent<Text> ();
 					childTextAmount.text = ("(x" + childBaseItemScript.ItemQuantity + ")");
+
 				} 
 
 			}

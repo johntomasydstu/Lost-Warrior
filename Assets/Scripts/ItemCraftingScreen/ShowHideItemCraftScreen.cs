@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowHideInventory : MonoBehaviour {
+public class ShowHideItemCraftScreen : MonoBehaviour {
 
 	public StatsScreenShowHide StatsScreenShowHideScript;
-	public ShowHideItemCraftScreen ShowHideItemCraftScreenScript;
+	public ShowHideInventory ShowHideInventoryScript;
 
 
 	public Transform canvas;
 	public CanvasGroup CanvasGroup;
 
-	public bool invShowing = false;
+	public bool itemCraftScreenShowing = false;
 
 
 	void Awake ()
 	{
-		invShowing = false; 
+		itemCraftScreenShowing = false; 
 		//invShowing = false;
 		CanvasGroup = canvas.GetComponent<CanvasGroup> ();
-		print (invShowing);
+		print (itemCraftScreenShowing);
 
 	}
 
@@ -32,25 +32,25 @@ public class ShowHideInventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown ("i")) 
+		if (Input.GetKeyDown ("g")) 
 		{
 			//print("'i' key pressed!");
 			//Checks if the inventory is not showing and if the Stat's Screen is also not showing
 			//and if so, shows the inventory, but if the inventory is already showing or if the
 			//Stat's Screen is already showing, it hides the inventory.
-			if (!invShowing && !StatsScreenShowHideScript.StatScreenShowing && !ShowHideItemCraftScreenScript.itemCraftScreenShowing) 
+			if (!itemCraftScreenShowing && !StatsScreenShowHideScript.StatScreenShowing && !ShowHideInventoryScript.invShowing) 
 			{
 				//print("Inventory Showing");
 				CanvasGroup.alpha = 0.75f;
 				CanvasGroup.blocksRaycasts = true;
-				invShowing = true;
+				itemCraftScreenShowing = true;
 			} 
 			else 
 			{
 				//print("Inventory Not Showing");
 				CanvasGroup.alpha = 0f;
 				CanvasGroup.blocksRaycasts = false;
-				invShowing = false;
+				itemCraftScreenShowing = false;
 
 			}
 

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 	void Update () 
 	{
 		//Checks if the player's "IsAttacking" animation variable is on
-		//print("isAttacking = " + anim.GetBool("IsAttacking"));
+		print("isAttacking = " + anim.GetBool("IsAttacking"));
 
 		if (!freezeMovement) 
 		{
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 				}
 				//rbody.velocity = Vector2.zero;
 				anim.SetBool ("IsAttacking", true);
-				//print("isAttacking = " + anim.GetBool("IsAttacking"));
+				print("isAttacking = " + anim.GetBool("IsAttacking"));
 
 			}
 
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
 				freezeMovement = false;
 			}
 			anim.SetBool ("IsAttacking", false);
-			//print("isAttacking = " + anim.GetBool("IsAttacking"));
+			print("isAttacking = " + anim.GetBool("IsAttacking"));
 
 		}
 	

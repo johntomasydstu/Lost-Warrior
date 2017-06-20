@@ -96,7 +96,8 @@ public class PlayerStats : MonoBehaviour {
 	{
 		if (type == "Bronze") 
 		{
-			print ("Type: " + type);
+			//print ("Type: " + type);
+			print("Equipped Armour!!");
 			this.GetComponent<Renderer> ().material.color = Invisible; //Makes the player invisible.
 			Armour.GetComponent<Renderer> ().material.color = Bronze; //Sets the Armour's colour to "Bronze".
 		}

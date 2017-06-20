@@ -9,7 +9,7 @@ public class ItemDatabase : MonoBehaviour{
 	public Sprite[] sprites; //A list of sprites that the item can have
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		
 		//Wood
 		BaseItem i0 = gameObject.AddComponent<BaseItem>();
